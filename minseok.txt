@@ -1,0 +1,1 @@
+fork한 원격repository의 변경내용을 내 local repository에 적용시켜 보았다. 적용시킨후 push작업
