@@ -74,15 +74,45 @@ class Binary_search_tree:
           parent.set_right(node)
         else:
           self.insert_node(right,node)
+  
   def print_tree(self):
     self.print_node(self.root,0)
   
   def print_node(self, node,depth):
-    print(node.get_key)
     if node is not None:
-      
-      
-         
+      block = ""
+      for i in range(0,depth):
+        block += "  "
+    
+      print(block , node.get_key())
+      self.print_node(node.get_left(),depth+1)
+      self.print_node(node.get_right(),depth+1)
+  
+  def delete_node(self,key):
+    return self.delete(self.root,key)
+  
+  def delete(self,node,key):
+    
+    if node is None:
+      return None
+    
+    if node.get_key() == key:
+      if node.get_left() and node.get_right() is not None:
+        print("자식이 2개 입니다.")
+        
+      else:
+        if node.get_left() or node.get_right() is not None:
+          print("자식이 1개 있습니다.")
+        else:
+          node = None
+          return node
+          print("자식이 없는 노드입니다")
+        
+    elif node.get_key() > key:
+      return self.delete(node.get_left(), key)
+    else:
+      return self.delete(node.get_right(), key)
+
       
     
 bst = Binary_search_tree()
@@ -117,6 +147,8 @@ node_83 = Node(83)
 bst.insert(node_83)
 node_90 = Node(90)
 bst.insert(node_90)
+node_35 = Node(35)
+bst.insert(node_35)
 
 result = bst.search(66)
 if result is None:
@@ -129,3 +161,11 @@ if result is None:
   print("fail")
 else:
   print("success")
+
+bst.delete_node(5)
+bst.delete_node(10)
+bst.delete_node(30)
+bst.delete_node(54)
+bst.delete_node(25)
+
+bst.print_tree()
