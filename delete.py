@@ -8,6 +8,7 @@ Original file is located at
 """
 
 class Node:
+  
   def __init__(self, key):
     self.key = key
     self.left = None
