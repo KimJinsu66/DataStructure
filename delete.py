@@ -88,34 +88,58 @@ class Binary_search_tree:
       self.print_node(node.get_left(),depth+1)
       self.print_node(node.get_right(),depth+1)
   
+
+
   def delete_node(self,key):
-    return self.delete(self.root,key)
+    parent = self.parent_search(self.root,key)
+    print(parent)
+    return self.delete(self.root,key,parent)
   
-  def delete(self,node,key):
-    #print(node.get_left().get_key())   
-    if node is None:
+  def parent_search(self,node,key):
+    if node.get_key() is None :
       return None
-    
-    left = node.get_left()
-    right = node.get_right()
-    if left.get_key() == key or right.get_key():
-      print("왼쪽 들어옴")
-      
-    elif right.get_key():
-      print("오른쪽 들어옴")
-
-    if node.get_key() == key:
+    elif node.get_left().get_key() == key:
       return node
+    elif node.get_right().get_key() == key:
+      return node
+    elif node.get_key() > key:
+      return self.parent_search(node.get_left(),key)
+    else:
+      return self.parent_search(node.get_right(),key)
     
 
-    elif node.get_key() > key:
-      return self.delete(node.get_left(), key)
+  def noneNode(self,node, key):
+    if node.get_key() < key:
+      node = node.set_right(None)
+      return node
     else:
-      return self.delete(node.get_right(), key)
-      
+      node = node.set_left(None)
+      return node
+  
+  def oneNode(self,node,key):
+    print("Hi2")
+  
+  def twoNode(self):
+    print("hi3")
 
-        
-     
+  
+  def delete(self,node,key,parent):
+    if node.get_key() == key:
+
+      if node.get_left()is not None and node.get_right() is not None :
+        print("2개입니다")
+        return self.twoNode()
+      elif node.get_left() is not None or node.get_right() is not None:
+        print("한개입니다")
+        return self.oneNode(parent,key)
+      else:
+        print("없습니다")
+        return self.noneNode(parent,key)
+    elif node.get_key() > key:
+      return self.delete(node.get_left(),key,parent)
+    else:
+      return self.delete(node.get_right(),key,parent)
+    
     
 bst = Binary_search_tree()
 
@@ -152,25 +176,20 @@ bst.insert(node_90)
 node_35 = Node(35)
 bst.insert(node_35)
 
-result = bst.search(66)
-if result is None:
-  print("fail")
-else:
-  print("success")
+# result = bst.search(66)
+# if result is None:
+#   print("fail")
+# else:
+#   print("success")
 
-result = bst.search(67)
-if result is None:
-  print("fail")
-else:
-  print("success")
+# result = bst.search(67)
+# if result is None:
+#   print("fail")
+# else:
+#   print("success")
 
-bst.delete_node(5)
-#bst.print_tree()
-#bst.print_tree()
-bst.delete_node(10)
-#bst.print_tree()
-
-# bst.delete_node(30)
-# bst.delete_node(54)
-# bst.delete_node(25)
+bst.delete_node(35)
+#bst.delete_node(5)
+#bst.delete_node(25)
+bst.print_tree()
 
