@@ -116,9 +116,15 @@ class Binary_search_tree:
       node = node.set_left(None)
       return node
   
-  def oneNode(self,node,key):
-    print("Hi2")
-  
+  def oneNode(self,node,parent,key):
+    if node.get_right() is not None:
+      node = node.get_right()
+      node = parent.set_right(node)
+      return node
+    else:
+      node = node.get_left()
+      node = parent.set_left(node)  
+      return node
   def twoNode(self):
     print("hi3")
 
@@ -131,7 +137,7 @@ class Binary_search_tree:
         return self.twoNode()
       elif node.get_left() is not None or node.get_right() is not None:
         print("한개입니다")
-        return self.oneNode(parent,key)
+        return self.oneNode(node,parent,key)
       else:
         print("없습니다")
         return self.noneNode(parent,key)
@@ -188,7 +194,7 @@ bst.insert(node_35)
 # else:
 #   print("success")
 
-bst.delete_node(35)
+bst.delete_node(10)
 #bst.delete_node(5)
 #bst.delete_node(25)
 bst.print_tree()
