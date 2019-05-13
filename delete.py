@@ -96,12 +96,11 @@ class Binary_search_tree:
     return self.delete(self.root,key,parent)
   
   def twoNode(self,node,parent,key):
-    inorder_node = node.get_right()
-    inorder_node = inorder_node.get_left()
+    inorder_node = self.in_order(node.get_right(),key)
         
     left = node.get_left()
     right = node.get_right()
-    right = right.set_right(None)
+    right = right.set_left(None)
     inorder_node.set_left(left)
     inorder_node.set_right(right)
     
@@ -111,19 +110,22 @@ class Binary_search_tree:
     else:
       node = parent.set_right(inorder_node)
       return node
-  def in_order(self,node,key):
+  
+  # def start_in_order(self,key):
+  #   return self.in_order(self.root,key)
+
+  def in_order(self,node,key): # inorder_node 찾기 
     
     if node is not None:
-      
+      inorder_node = node
       return self.in_order(node.get_left(),key)
+      
       print(node.get_key() ,end = " ")
-      #if node.get_key() == key:
-        #일딴 이렇게 만듬 수정 필수
-        #return inorder_node
-        #print(inorder_node.get_key())
-      return self.in_order(node.get_right(),key)
-    
-    
+      
+      
+    else:
+      return inorder_node
+      #self.in_order(node.get_right(),key,inorder_node
       
 
   def parent_search(self,node,key):
@@ -140,6 +142,7 @@ class Binary_search_tree:
     
 
   def noneNode(self,node, key):
+    self.in_order(self.root,69)
     if node.get_key() < key:
       node = node.set_right(None)
       return node
@@ -212,19 +215,8 @@ bst.insert(node_90)
 node_35 = Node(35)
 bst.insert(node_35)
 
-# result = bst.search(66)
-# if result is None:
-#   print("fail")
-# else:
-#   print("success")
-
-# result = bst.search(67)
-# if result is None:
-#   print("fail")
-# else:
-#   print("success")
-
-bst.delete_node(25)
+#bst.start_in_order(69)
+bst.delete_node(69)
 #bst.delete_node(5)
 #bst.delete_node(25)
 bst.print_tree()
