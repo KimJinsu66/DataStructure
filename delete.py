@@ -92,47 +92,36 @@ class Binary_search_tree:
 
   def delete_node(self,key):
     parent = self.parent_search(self.root,key)
-    print(parent)
+    print(parent.get_key())
     return self.delete(self.root,key,parent)
   
-  def twoNode(self,node,parent,key):
-    inorder_node = self.in_order(node.get_right(),key)
-        
-    left = node.get_left()
-    right = node.get_right()
-    right = right.set_left(None)
-    inorder_node.set_left(left)
-    inorder_node.set_right(right)
-    
-    if key < parent.get_key():
-      node = parent.set_left(inorder_node)
-      return node
-    else:
-      node = parent.set_right(inorder_node)
-      return node
   
-  # def start_in_order(self,key):
-  #   return self.in_order(self.root,key)
-
+  
+  
   def in_order(self,node,key): # inorder_node 찾기 
-    
-    if node is not None:
+    if node.get_left() is None:
       inorder_node = node
-      return self.in_order(node.get_left(),key)
-      
-      print(node.get_key() ,end = " ")
-      
-      
-    else:
       return inorder_node
-      #self.in_order(node.get_right(),key,inorder_node
+    else:
+      return self.in_order(node.get_left(),key)
+      #inorder_node = node
       
+      #print(node.get_key() ,end = " ")
+      
+      
+     
 
   def parent_search(self,node,key):
-    if node.get_key() is None :
-      return None
+    if node.get_key() == key:
+      return node
+    
+    if node.get_left() is None:
+      pass 
+    elif node.get_right() is None:
+      pass
     elif node.get_left().get_key() == key:
       return node
+    
     elif node.get_right().get_key() == key:
       return node
     elif node.get_key() > key:
@@ -140,16 +129,20 @@ class Binary_search_tree:
     else:
       return self.parent_search(node.get_right(),key)
     
-
-  def noneNode(self,node, key):
-    self.in_order(self.root,69)
-    if node.get_key() < key:
-      node = node.set_right(None)
+      
+  #삭제노드에서 자식노드가 없을 떄
+  def noneNode(self,node,parent, key):
+    
+    if parent.get_key() < key:
+      none_node = node.get_right()
+      node = parent.set_right(none_node)
       return node
     else:
-      node = node.set_left(None)
+      none_node = node.get_left()
+      node = parent.set_left(none_node)
       return node
   
+  #삭제노드에서 자식노드가 한개 있을떄
   def oneNode(self,node,parent,key):
     if node.get_right() is not None:
       node = node.get_right()
@@ -160,8 +153,28 @@ class Binary_search_tree:
       node = parent.set_left(node)  
       return node
   
+  def twoNode(self,node,parent,key):
+    inorder_node = self.in_order(node.get_right(),key)
+    None_node = inorder_node.get_left()
+    left = node.get_left()
+    right = node.get_right()
+    if right.get_left() is not None:
+      right.set_left(None_node)
+    inorder_node.set_left(left)
+    if right.get_key() == inorder_node.get_key():
+      pass
+      
+    else:
+      inorder_node.set_right(right)
     
-  
+    if key < parent.get_key():
+      node = parent.set_left(inorder_node)
+      return node
+    else:
+      node = parent.set_right(inorder_node)
+      return node
+    
+  # 노드 삭제 메소드
   def delete(self,node,key,parent):
     if node.get_key() == key:
 
@@ -173,7 +186,7 @@ class Binary_search_tree:
         return self.oneNode(node,parent,key)
       else:
         print("없습니다")
-        return self.noneNode(parent,key)
+        return self.noneNode(node,parent,key)
     elif node.get_key() > key:
       return self.delete(node.get_left(),key,parent)
     else:
@@ -216,8 +229,13 @@ node_35 = Node(35)
 bst.insert(node_35)
 
 #bst.start_in_order(69)
-bst.delete_node(69)
-#bst.delete_node(5)
-#bst.delete_node(25)
+bst.delete_node(15)
+bst.delete_node(5)
+bst.delete_node(8)
 bst.print_tree()
+#bst.delete_node(10)
+#bst.delete_node(30)
+#bst.print_tree()
+#bst.delete_node(30)
+
 
